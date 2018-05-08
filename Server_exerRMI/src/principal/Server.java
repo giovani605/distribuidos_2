@@ -7,6 +7,7 @@ import java.rmi.registry.Registry;
 public class Server {
 
 	public Server() {
+		// escrevi
 		try {
 			Registry servicoNomes = LocateRegistry.createRegistry(1100);
 			
