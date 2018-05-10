@@ -1,4 +1,4 @@
-package interfaces;
+package servicoInterface;
 
 import java.io.File;
 import java.rmi.Remote;
@@ -6,7 +6,6 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public interface InterfaceServ extends Remote {
-
 
 	public ArrayList<String> consultar() throws RemoteException ; 
 
