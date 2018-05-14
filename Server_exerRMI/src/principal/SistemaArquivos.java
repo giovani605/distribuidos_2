@@ -1,5 +1,6 @@
 package principal;
 
+import java.io.File;
 import java.util.ArrayList;
 
 //0-criar pasta separada oonde estarao os arquivos 
@@ -11,11 +12,33 @@ import java.util.ArrayList;
 //carregar arquivo txt com class file
 public class SistemaArquivos {
 	public SistemaArquivos() {
-
+		   File arquivo = new File("C:\\"); 
+	        File[] file = arquivo.listFiles(); 
+	        if(file != null){ 
+	            int length = file.length; 
+	            for(int i = 0; i < length; ++i){ 
+	                File f = file[i]; 
+	                if(f.isFile()){ 
+	                    System.out.println(f.getName()); 
+	                } 
+	                else if(f.isDirectory()){ 
+	                    System.out.println("Diretorio: " + f.getName()); 
+	                } 
+	            }
 	}
 	public ArrayList<String> consultarTodosArquivos(){
 	
 		
 	return null;	
+	}
+	public static void CriaPasta(){
+		try {
+            File caminho = new File("C:\\Desktop");
+            caminho.mkdir();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Falha, diretorio nao criado");
+            System.out.println(ex);
+        }
+		
 	}
 }
