@@ -10,10 +10,12 @@ import java.util.ArrayList;
 //3-implementar uma funcao que retorna um arquivo quando passar nome por referencia
 
 //carregar arquivo txt com class file
+
 public class SistemaArquivos {
 	public SistemaArquivos() {
-		   File arquivo = new File("C:\\"); 
-	        File[] file = arquivo.listFiles(); 
+		String diretorioAtual = new File(".").getAbsolutePath();
+		File arquivo = new File(diretorioAtual); 
+	    File[] file = arquivo.listFiles(); 
 	        if(file != null){ 
 	            int length = file.length; 
 	            for(int i = 0; i < length; ++i){ 
@@ -26,14 +28,18 @@ public class SistemaArquivos {
 	                } 
 	            }
 	}
+		
+	}
 	public ArrayList<String> consultarTodosArquivos(){
 	
 		
 	return null;	
 	}
 	public static void CriaPasta(){
+		String diretorioAtual = new File(".").getAbsolutePath();
+		
 		try {
-            File caminho = new File("C:\\Desktop");
+            File caminho = new File(diretorioAtual);
             caminho.mkdir();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Falha, diretorio nao criado");
