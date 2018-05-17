@@ -13,7 +13,7 @@ import java.util.Scanner;
 import interfaces.InterfaceServ;
 
 public class Server {
-	private InterfaceServ interf;
+	private InterfaceServImpl interf;
 
 	public Server() {
 		// escrevi
@@ -21,11 +21,11 @@ public class Server {
 		Registry servicoNomes = null;
 		try {
 			interf = new InterfaceServImpl();
-			
-			//System.setProperty("java.rmi.server.hostname", "hostname");
+
+			// System.setProperty("java.rmi.server.hostname", "hostname");
 			servicoNomes = LocateRegistry.createRegistry(10000);
 			servicoNomes.bind("Server", interf);
-			
+
 			// System.setProperty("java.security.policy", );
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
@@ -40,11 +40,25 @@ public class Server {
 		Properties propriedades = new Properties();
 		propriedades.put("java.security.policy", "/home/giovani/politica.policy");
 		SocketPermission p2 = new SocketPermission("localhost:1024-", "accept,connect,listen");
-		
-		
+
 		Server server = new Server();
 		Scanner scan = new Scanner(System.in);
-		scan.nextLine();
+		boolean flag = true;
+		while (flag) {
+			String entrada = scan.nextLine();
+			if (entrada.equals("teste")) {
+				server.teste();
+
+			}
+			if (entrada.equalsIgnoreCase("sair"))
+				break;
+		}
+
+	}
+
+	private void teste() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

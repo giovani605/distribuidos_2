@@ -33,9 +33,7 @@ public class SistemaArquivos {
 		
 	}
 	public ArrayList<String> consultarTodosArquivos(){
-	
-		
-	return null;	
+		return null;	
 	}
 	public static void CriaPasta(){
 		String diretorioAtual = new File(".").getAbsolutePath();
@@ -52,5 +50,8 @@ public class SistemaArquivos {
 	public File getArquivo(String nomeArq) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public void adicionarArq(File f) {
+		
 	}
 }

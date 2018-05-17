@@ -7,13 +7,11 @@ public class InterfaceClienteImpl extends UnicastRemoteObject implements Interfa
 
 	protected InterfaceClienteImpl() throws RemoteException {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void notificar(String nomeArq) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Arquivo " + nomeArq + " disponivel");
 	}
 
 }
