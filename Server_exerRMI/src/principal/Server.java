@@ -16,17 +16,14 @@ public class Server {
 	private InterfaceServImpl interf;
 
 	public Server() {
-		// escrevi
 		super();
 		Registry servicoNomes = null;
 		try {
 			interf = new InterfaceServImpl();
 
-			// System.setProperty("java.rmi.server.hostname", "hostname");
 			servicoNomes = LocateRegistry.createRegistry(10000);
 			servicoNomes.bind("Server", interf);
 
-			// System.setProperty("java.security.policy", );
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -37,9 +34,6 @@ public class Server {
 
 	public static void main(String[] args) {
 		System.setProperty("java.security.policy", "file:java.policy");
-//		Properties propriedades = new Properties();
-//		propriedades.put("java.security.policy", "/home/giovani/politica.policy");
-//		SocketPermission p2 = new SocketPermission("localhost:1024-", "accept,connect,listen");
 
 		Server server = new Server();
 		Scanner scan = new Scanner(System.in);
@@ -47,7 +41,7 @@ public class Server {
 		while (flag) {
 			String entrada = scan.nextLine();
 			if (entrada.equals("teste")) {
-				server.teste();
+				
 
 			}
 			if (entrada.equalsIgnoreCase("sair"))
@@ -56,9 +50,5 @@ public class Server {
 
 	}
 
-	private void teste() {
-		// TODO Auto-generated method stub
-
-	}
 
 }
