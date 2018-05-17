@@ -70,6 +70,8 @@ public class InterfaceServImpl extends UnicastRemoteObject implements InterfaceS
 			ListaInterresados l = new ListaInterresados(nomeArq);
 			l.getClientes().add(cliente);
 			this.listaInterrados.add(l);
+		}else {
+			lista.getClientes().add(cliente);
 		}
 
 	}
