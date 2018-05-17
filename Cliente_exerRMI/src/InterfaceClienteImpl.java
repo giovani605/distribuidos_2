@@ -1,7 +1,7 @@
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-import servicoInterface.InterfaceCliente;
+import interfaces.InterfaceCliente;
 
 public class InterfaceClienteImpl extends UnicastRemoteObject implements InterfaceCliente {
 

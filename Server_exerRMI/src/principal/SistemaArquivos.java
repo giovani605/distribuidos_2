@@ -3,12 +3,14 @@ package principal;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 //0-criar pasta separada oonde estarao os arquivos 
 
 //1-implementar uma funçao de retornar nome de todos os arquivos
 //2-implementar uma funcao que add novos arquivos (up)
 //3-implementar uma funcao que retorna um arquivo quando passar nome por referencia
-
+//4- implementa uma funcao que retorna os bytes de um arquivo
 //carregar arquivo txt com class file
 
 public class SistemaArquivos {
@@ -46,5 +48,9 @@ public class SistemaArquivos {
             System.out.println(ex);
         }
 		
+	}
+	public File getArquivo(String nomeArq) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -1,4 +1,4 @@
-package servicoInterface;
+package interfaces;
 
 import java.io.File;
 import java.rmi.Remote;
