@@ -29,6 +29,9 @@ public class Cliente {
 	private InterfaceClienteImpl interfaceCliente;
 
 	public Cliente() {
+		
+		System.setProperty("java.security.policy", "file:java.policy");
+		
 		if (System.getSecurityManager() == null) {
 			System.setSecurityManager(new SecurityManager());
 		}

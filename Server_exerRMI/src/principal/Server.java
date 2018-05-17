@@ -36,10 +36,10 @@ public class Server {
 	}
 
 	public static void main(String[] args) {
-		// System.setProperty("java.security.policy", "file:./bin/settings.policy");
-		Properties propriedades = new Properties();
-		propriedades.put("java.security.policy", "/home/giovani/politica.policy");
-		SocketPermission p2 = new SocketPermission("localhost:1024-", "accept,connect,listen");
+		System.setProperty("java.security.policy", "file:java.policy");
+//		Properties propriedades = new Properties();
+//		propriedades.put("java.security.policy", "/home/giovani/politica.policy");
+//		SocketPermission p2 = new SocketPermission("localhost:1024-", "accept,connect,listen");
 
 		Server server = new Server();
 		Scanner scan = new Scanner(System.in);
