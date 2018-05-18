@@ -17,6 +17,10 @@ public class Server {
 
 	public Server() {
 		super();
+		if (System.getSecurityManager() == null) {
+			System.setSecurityManager(new SecurityManager());
+		}
+
 		Registry servicoNomes = null;
 		try {
 			interf = new InterfaceServImpl();
@@ -41,7 +45,6 @@ public class Server {
 		while (flag) {
 			String entrada = scan.nextLine();
 			if (entrada.equals("teste")) {
-				
 
 			}
 			if (entrada.equalsIgnoreCase("sair"))
@@ -49,6 +52,5 @@ public class Server {
 		}
 
 	}
-
 
 }
