@@ -6,8 +6,8 @@ import interfaces.InterfaceCliente;
 
 public class ListaInterresados {
 	private String nomeArq;
-	private ArrayList<InterfaceCliente> clientes = new ArrayList<InterfaceCliente>();
-	
+	private ArrayList<Interresado> clientes = new ArrayList<Interresado>();
+
 	public ListaInterresados(String nomeArq) {
 		this.setNomeArq(nomeArq);
 	}
@@ -20,13 +20,12 @@ public class ListaInterresados {
 		this.nomeArq = nomeArq;
 	}
 
-	public ArrayList<InterfaceCliente> getClientes() {
+	public ArrayList<Interresado> getClientes() {
 		return clientes;
 	}
 
-	public void setClientes(ArrayList<InterfaceCliente> clientes) {
+	public void setClientes(ArrayList<Interresado> clientes) {
 		this.clientes = clientes;
 	}
-	
 
 }

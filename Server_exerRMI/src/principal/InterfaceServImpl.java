@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Date;
 
 import interfaces.InterfaceCliente;
 import interfaces.InterfaceServ;
@@ -25,13 +26,14 @@ public class InterfaceServImpl extends UnicastRemoteObject implements InterfaceS
 		super();
 		arquivos = new SistemaArquivos("arquivos");
 	}
+
 	// Retorna todos os arquivos disponiveis para o cliente
 	@Override
 	public ArrayList<String> consultar() {
-		//System.out.println("consultando");
+		// System.out.println("consultando");
 		return arquivos.consultarTodosArquivos();
 	}
-	
+
 	// Envia ao cliente o arquivo(bytes) desejado
 	@Override
 	public byte[] download(String nomeArq) {
@@ -49,6 +51,7 @@ public class InterfaceServImpl extends UnicastRemoteObject implements InterfaceS
 	// Pensar como fazer isso
 	private ArrayList<ListaInterresados> listaInterrados = new ArrayList<>();
 
+	// Recupera a lista de interessados pelo nome do arquivo
 	private ListaInterresados getLista(String nomeArq) {
 		for (ListaInterresados l : listaInterrados) {
 			if (l.getNomeArq().equals(nomeArq)) {
@@ -57,33 +60,28 @@ public class InterfaceServImpl extends UnicastRemoteObject implements InterfaceS
 		}
 		return null;
 	}
-	
+
 	// Registra o interesse do usuario em um arquivo
 	@Override
-	public void registrarInteresse(String nomeArq, InterfaceCliente cliente) throws RemoteException {
+	public void registrarInteresse(String nomeArq, InterfaceCliente cliente, Date dataValidade) throws RemoteException {
 
-		if (arquivos.getArquivo(nomeArq) != null) {
-			cliente.notificar(nomeArq);
-			// ja chama a interface do cliente avisando a disponibilidade do arq
-			return;
-		}
 		ListaInterresados lista = getLista(nomeArq);
 		if (lista == null) {
 			ListaInterresados l = new ListaInterresados(nomeArq);
-			l.getClientes().add(cliente);
+			l.getClientes().add(new Interresado(cliente, dataValidade));
 			this.listaInterrados.add(l);
 		} else {
-			lista.getClientes().add(cliente);
+			lista.getClientes().add(new Interresado(cliente, dataValidade));
 		}
 
 	}
-	
+
 	// Cancela o interesse em um arquivo
 	@Override
 	public void cancelarRegistro(String nomeArq, InterfaceCliente cliente) throws RemoteException {
 		ListaInterresados lista = getLista(nomeArq);
-		for (InterfaceCliente c : lista.getClientes()) {
-			if (c.equals(cliente)) {
+		for (Interresado c : lista.getClientes()) {
+			if (c.getInterf().equals(cliente)) {
 				// remover ele da lista
 				lista.getClientes().remove(c);
 				return;
@@ -91,7 +89,7 @@ public class InterfaceServImpl extends UnicastRemoteObject implements InterfaceS
 		}
 	}
 
-	// Recebe um arquivo do cliente 
+	// Recebe um arquivo do cliente
 	@Override
 	public int upload(byte[] f, String nome) throws RemoteException {
 		arquivos.gravarArq(f, nome);
@@ -99,19 +97,24 @@ public class InterfaceServImpl extends UnicastRemoteObject implements InterfaceS
 
 		return 0;
 	}
-	
+
 	// Notifica os clientes interresados
 	public void notificar(String nomeArq) {
 		ListaInterresados lista = this.getLista(nomeArq);
 		if (lista == null)
 			return;
-		for (InterfaceCliente c : lista.getClientes()) {
-			try {
-				c.notificar(nomeArq);
-			} catch (RemoteException e) {
-				System.out.println("Não foi possivel notificar o cliente " + c.toString() + " " + e.getMessage());
+		for (Interresado c : lista.getClientes()) {
+			Date dataAtual = new Date();
+			if (dataAtual.before(c.getDataValidade())) {
+				try {
+					c.getInterf().notificar(nomeArq);
+				} catch (RemoteException e) {
+					System.out.println("Não foi possivel notificar o cliente " + c.toString() + " " + e.getMessage());
+				}
 			}
 		}
+		// remove todos os interresados
+		this.listaInterrados.remove(lista);
 
 	}
 

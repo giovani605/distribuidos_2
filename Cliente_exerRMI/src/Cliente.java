@@ -20,6 +20,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.security.AllPermission;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -29,10 +30,10 @@ public class Cliente {
 	private InterfaceServ server;
 	private InterfaceClienteImpl interfaceCliente;
 	private SistemaArquivos arquivos;
-	
+
 	public Cliente(String path) {
 		arquivos = new SistemaArquivos(path);
-	
+
 		System.setProperty("java.security.policy", "file:java.policy");
 
 		if (System.getSecurityManager() == null) {
@@ -57,7 +58,7 @@ public class Cliente {
 		}
 
 	}
-	
+
 	// essa funcao fica em loop recebendo os comandos do usuario
 	private void loop() {
 		if (this.server == null) {
@@ -86,9 +87,16 @@ public class Cliente {
 			if (comando.equalsIgnoreCase("CANCELAR")) {
 				cancelar();
 			}
+			if (comando.equalsIgnoreCase("AJUDA")) {
+				ajudar();
+			}
 		}
 		System.out.println("fim: ");
 
+	}
+
+	private void ajudar() {
+		System.out.println("Comandos disponiveis: CONSULTAR, SAIR ,REGISTRAR, DOWNLOAD, UPLOAD, CANCELAR, AJUDA");
 	}
 
 	// cancela o interrese em um arquivo
@@ -98,6 +106,7 @@ public class Cliente {
 		String arq = scan.nextLine();
 		try {
 			server.cancelarRegistro(arq, this.interfaceCliente);
+			System.out.println("Comando concluido com sucesso");
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -112,31 +121,31 @@ public class Cliente {
 		String arq = scan.nextLine();
 		try {
 			byte[] arquivo = server.download(arq);
-			// TODO fazer ele receber o arquivo
 			if (arquivo == null) {
 				System.out.println("Arquivo não encontrado");
 				return;
 			}
 			arquivos.gravarArq(arquivo, arq);
-
+			System.out.println("Comando concluido com sucesso");
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
-	// envia um arquivo ao servidor 
+
+	// envia um arquivo ao servidor
 	public void upload() {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Digite o arquivo desejado: ");
 		String arq = scan.nextLine();
 		try {
-			File f = new File(arq);
+			File f = arquivos.getArquivo(arq);
 			if (f == null)
 				return;
 
 			int cod = server.upload(arquivos.converterArqByte(f), arq);
-
+			System.out.println("Comando concluido com sucesso");
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -147,10 +156,17 @@ public class Cliente {
 	// esgistra o interrese em um arquivo
 	public void registrar() {
 		Scanner scan = new Scanner(System.in);
+		int min;
 		System.out.println("Digite o arquivo desejado: ");
 		String arq = scan.nextLine();
+
+		System.out.println("Digite quantos minutos esse interrese é valido: ");
+		min = scan.nextInt();
 		try {
-			server.registrarInteresse(arq, this.interfaceCliente);
+			Date dataValidade = new Date();
+			dataValidade.setMinutes(dataValidade.getMinutes() + min);
+			server.registrarInteresse(arq, this.interfaceCliente,dataValidade);
+			System.out.println("Comando concluido com sucesso");
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -158,7 +174,7 @@ public class Cliente {
 
 	}
 
-	// consulta os arquivos disponiveis no Server 
+	// consulta os arquivos disponiveis no Server
 	public void consultar() {
 		ArrayList<String> lista = null;
 		try {
@@ -178,9 +194,12 @@ public class Cliente {
 	}
 
 	public static void main(String[] args) {
-		// isso vai servir depois
-		// System.setProperty("java.security.policy", "file:./bin/settings.policy");
-		Cliente cliente = new Cliente("arquivos/teste1");
+		Scanner scan = new Scanner(System.in);
+		System.out.println("digite o nome da pasta: ");
+		String a = scan.nextLine();
+
+		Cliente cliente = new Cliente("arquivos/" + a);
+		cliente.ajudar();
 		cliente.loop();
 	}
 
