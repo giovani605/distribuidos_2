@@ -41,7 +41,7 @@ public class InterfaceServImpl extends UnicastRemoteObject implements InterfaceS
 			return null;
 		}
 
-		return converterArqByte(f);
+		return arquivos.converterArqByte(f);
 
 	}
 
@@ -91,12 +91,7 @@ public class InterfaceServImpl extends UnicastRemoteObject implements InterfaceS
 	// retorna os codigos de sucesso
 	@Override
 	public int upload(byte[] f, String nome) throws RemoteException {
-		// grava no sitema de arquivos
-		// transformar os bytes em um arquivos
-		File file = new File(".");
-
-		this.arquivos.adicionarArq(file);
-
+		arquivos.gravarArq(f, nome);
 		notificar(nome);
 
 		return 0;
@@ -104,6 +99,8 @@ public class InterfaceServImpl extends UnicastRemoteObject implements InterfaceS
 
 	public void notificar(String nomeArq) {
 		ListaInterresados lista = this.getLista(nomeArq);
+		if (lista == null)
+			return;
 		for (InterfaceCliente c : lista.getClientes()) {
 			try {
 				c.notificar(nomeArq);
@@ -111,20 +108,6 @@ public class InterfaceServImpl extends UnicastRemoteObject implements InterfaceS
 				System.out.println("Não foi possivel notificar o cliente " + c.toString() + " " + e.getMessage());
 			}
 		}
-
-	}
-
-	public byte[] converterArqByte(File f) {
-		byte[] vetor = new byte[(int) f.length()];
-		try {
-			FileInputStream input = new FileInputStream(f);
-			input.read(vetor);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return vetor;
 
 	}
 

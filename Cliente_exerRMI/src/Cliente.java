@@ -28,8 +28,10 @@ import interfaces.InterfaceServ;
 public class Cliente {
 	private InterfaceServ server;
 	private InterfaceClienteImpl interfaceCliente;
+	private SistemaArquivos arquivos;
 
-	public Cliente() {
+	public Cliente(String path) {
+		arquivos = new SistemaArquivos(path);
 
 		System.setProperty("java.security.policy", "file:java.policy");
 
@@ -74,6 +76,9 @@ public class Cliente {
 			if (comando.equalsIgnoreCase("DOWNLOAD")) {
 				download();
 			}
+			if (comando.equalsIgnoreCase("UPLOAD")) {
+				upload();
+			}
 			if (comando.equalsIgnoreCase("CANCELAR")) {
 				cancelar();
 			}
@@ -108,7 +113,7 @@ public class Cliente {
 				System.out.println("Arquivo não encontrado");
 				return;
 			}
-			gravarArq(arquivo, arq);
+			arquivos.gravarArq(arquivo, arq);
 
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
@@ -117,15 +122,22 @@ public class Cliente {
 
 	}
 
-	public void gravarArq(byte[] bytes, String nomeArq) {
-		File f = new File(nomeArq);
+	public void upload() {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Digite o arquivo desejado: ");
+		String arq = scan.nextLine();
 		try {
-			FileOutputStream output = new FileOutputStream(f);
-			output.write(bytes);
-			output.flush();
-		} catch (Exception e) {
-			// TODO: handle exception
+			File f = new File(arq);
+			if (f == null)
+				return;
+
+			int cod = server.upload(arquivos.converterArqByte(f), arq);
+
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
 	}
 
 	// funcao que resgistra o interrese em um arquivo
@@ -164,7 +176,7 @@ public class Cliente {
 	public static void main(String[] args) {
 		// isso vai servir depois
 		// System.setProperty("java.security.policy", "file:./bin/settings.policy");
-		Cliente cliente = new Cliente();
+		Cliente cliente = new Cliente("arquivos/teste");
 		cliente.loop();
 	}
 
