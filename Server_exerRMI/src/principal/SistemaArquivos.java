@@ -18,12 +18,11 @@ public class SistemaArquivos {
 
 	public SistemaArquivos(String PATH) {
 		this.PATH = PATH;
-		String diretorioAtual = new File(".").getAbsolutePath();
-
-		if (PATH == diretorioAtual) {
-
+		//String diretorioAtual = new File(".").getAbsolutePath();
+		File file = new File(PATH);
+		if(!file.exists()) {
+			file.mkdir();
 		}
-
 	}
 
 	public ArrayList<String> consultarTodosArquivos() {
