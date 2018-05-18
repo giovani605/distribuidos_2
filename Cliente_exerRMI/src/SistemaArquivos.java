@@ -1,11 +1,9 @@
 
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
 
 //0-criar pasta separada oonde estarao os arquivos 
@@ -21,18 +19,22 @@ public class SistemaArquivos {
 
 	public SistemaArquivos(String PATH) {
 		this.PATH = PATH;
-		//String diretorioAtual = new File(".").getAbsolutePath();
+		// String diretorioAtual = new File(".").getAbsolutePath();
 		File file = new File(PATH);
-		if(!file.exists()) {
+		if (!file.exists()) {
 			file.mkdir();
 		}
 	}
 
 	public ArrayList<String> consultarTodosArquivos() {
-		return null;
+		ArrayList<String> lista = new ArrayList<>();
+		for (String s : new File(this.PATH + "/").list()) {
+			lista.add(s);
+		}
+		return lista;
 	}
 
-	public static void CriaPasta() {
+	public static void CriaPasta(String Path) {
 		String diretorioAtual = new File(".").getAbsolutePath();
 
 		try {
@@ -53,7 +55,7 @@ public class SistemaArquivos {
 	public void adicionarArq(File f) {
 
 	}
-	
+
 	public byte[] converterArqByte(File f) {
 		byte[] vetor = new byte[(int) f.length()];
 		try {
@@ -67,8 +69,9 @@ public class SistemaArquivos {
 		return vetor;
 
 	}
+
 	public void gravarArq(byte[] bytes, String nomeArq) {
-		File f = new File(nomeArq);
+		File f = new File(this.PATH + "/" + nomeArq);
 		try {
 			FileOutputStream output = new FileOutputStream(f);
 			output.write(bytes);
@@ -77,6 +80,5 @@ public class SistemaArquivos {
 			// TODO: handle exception
 		}
 	}
-	
-	
+
 }

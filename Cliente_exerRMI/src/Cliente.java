@@ -176,7 +176,7 @@ public class Cliente {
 	public static void main(String[] args) {
 		// isso vai servir depois
 		// System.setProperty("java.security.policy", "file:./bin/settings.policy");
-		Cliente cliente = new Cliente("arquivos/teste");
+		Cliente cliente = new Cliente("arquivos/teste1");
 		cliente.loop();
 	}
 
