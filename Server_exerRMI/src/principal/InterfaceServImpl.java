@@ -18,7 +18,7 @@ public class InterfaceServImpl extends UnicastRemoteObject implements InterfaceS
 
 	protected InterfaceServImpl() throws RemoteException {
 		super();
-		arquivos = new SistemaArquivos();
+		arquivos = new SistemaArquivos("arquivos");
 	}
 
 	@Override

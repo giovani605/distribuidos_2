@@ -15,38 +15,40 @@ import javax.swing.JOptionPane;
 
 public class SistemaArquivos {
 	private String PATH;
+
 	public SistemaArquivos(String PATH) {
-		this.PATH = PATH;  
+		this.PATH = PATH;
 		String diretorioAtual = new File(".").getAbsolutePath();
-	
+
 		if (PATH == diretorioAtual) {
-			
-		
+
+		}
+
 	}
-		
-	}
-	public ArrayList<String> consultarTodosArquivos(){
-		return null;	
-	}
-	public static void CriaPasta(){
-		String diretorioAtual = new File(".").getAbsolutePath();
-		
-		try {
-            File caminho = new File(diretorioAtual);
-            caminho.mkdir();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Falha, diretorio nao criado");
-            System.out.println(ex);
-        }
-		
-	}
-	public File getArquivo(String nomeArq) {
-		
-		
-		
+
+	public ArrayList<String> consultarTodosArquivos() {
 		return null;
 	}
+
+	public static void CriaPasta() {
+		String diretorioAtual = new File(".").getAbsolutePath();
+
+		try {
+			File caminho = new File(diretorioAtual);
+			caminho.mkdir();
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, "Falha, diretorio nao criado");
+			System.out.println(ex);
+		}
+
+	}
+
+	public File getArquivo(String nomeArq) {
+
+		return new File(PATH + "/" + nomeArq);
+	}
+
 	public void adicionarArq(File f) {
-		
+
 	}
 }

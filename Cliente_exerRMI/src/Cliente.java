@@ -37,7 +37,6 @@ public class Cliente {
 		}
 		try {
 			interfaceCliente = new InterfaceClienteImpl();
-
 			Registry locate = LocateRegistry.getRegistry("localhost", 10000);
 			server = (InterfaceServ) locate.lookup("Server");
 		} catch (RemoteException e) {
@@ -72,7 +71,7 @@ public class Cliente {
 				registrar();
 			}
 			if (comando.equalsIgnoreCase("DOWNLOAD")) {
-				registrar();
+				download();
 			}
 			if (comando.equalsIgnoreCase("CANCELAR")) {
 				cancelar();
