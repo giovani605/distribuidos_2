@@ -8,7 +8,7 @@ public class InterfaceClienteImpl extends UnicastRemoteObject implements Interfa
 	protected InterfaceClienteImpl() throws RemoteException {
 		super();
 	}
-
+	// Notifica o cliente sobre um arquivo disponivel via RMI
 	@Override
 	public void notificar(String nomeArq) {
 		System.out.println("Arquivo " + nomeArq + " disponivel");
