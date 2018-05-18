@@ -29,18 +29,21 @@ public class Cliente {
 	private InterfaceServ server;
 	private InterfaceClienteImpl interfaceCliente;
 	private SistemaArquivos arquivos;
-
+	
 	public Cliente(String path) {
 		arquivos = new SistemaArquivos(path);
-
+	
 		System.setProperty("java.security.policy", "file:java.policy");
 
 		if (System.getSecurityManager() == null) {
 			System.setSecurityManager(new SecurityManager());
 		}
 		try {
+			// cria a interface do cliente
 			interfaceCliente = new InterfaceClienteImpl();
+			// procuro o servico de nomes
 			Registry locate = LocateRegistry.getRegistry("localhost", 10000);
+			// procuro a interface do servidor
 			server = (InterfaceServ) locate.lookup("Server");
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
@@ -54,7 +57,8 @@ public class Cliente {
 		}
 
 	}
-
+	
+	// essa funcao fica em loop recebendo os comandos do usuario
 	private void loop() {
 		if (this.server == null) {
 			return;
@@ -87,7 +91,7 @@ public class Cliente {
 
 	}
 
-	//
+	// cancela o interrese em um arquivo
 	public void cancelar() {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Digite o arquivo desejado: ");
@@ -101,7 +105,7 @@ public class Cliente {
 
 	}
 
-	// funcao q baixa um arquivo
+	// baixa o arquivo desejado no servidor
 	public void download() {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Digite o arquivo desejado: ");
@@ -121,7 +125,7 @@ public class Cliente {
 		}
 
 	}
-
+	// envia um arquivo ao servidor 
 	public void upload() {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Digite o arquivo desejado: ");
@@ -140,7 +144,7 @@ public class Cliente {
 
 	}
 
-	// funcao que resgistra o interrese em um arquivo
+	// esgistra o interrese em um arquivo
 	public void registrar() {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Digite o arquivo desejado: ");
@@ -154,7 +158,7 @@ public class Cliente {
 
 	}
 
-	// aqui consulto o Server para ver os arquivos disponiveis
+	// consulta os arquivos disponiveis no Server 
 	public void consultar() {
 		ArrayList<String> lista = null;
 		try {
