@@ -25,13 +25,14 @@ public class InterfaceServImpl extends UnicastRemoteObject implements InterfaceS
 		super();
 		arquivos = new SistemaArquivos("arquivos");
 	}
-
+	// Retorna todos os arquivos disponiveis para o cliente
 	@Override
 	public ArrayList<String> consultar() {
-		System.out.println("consultando");
+		//System.out.println("consultando");
 		return arquivos.consultarTodosArquivos();
 	}
-
+	
+	// Envia ao cliente o arquivo(bytes) desejado
 	@Override
 	public byte[] download(String nomeArq) {
 
@@ -56,7 +57,8 @@ public class InterfaceServImpl extends UnicastRemoteObject implements InterfaceS
 		}
 		return null;
 	}
-
+	
+	// Registra o interesse do usuario em um arquivo
 	@Override
 	public void registrarInteresse(String nomeArq, InterfaceCliente cliente) throws RemoteException {
 
@@ -75,7 +77,8 @@ public class InterfaceServImpl extends UnicastRemoteObject implements InterfaceS
 		}
 
 	}
-
+	
+	// Cancela o interesse em um arquivo
 	@Override
 	public void cancelarRegistro(String nomeArq, InterfaceCliente cliente) throws RemoteException {
 		ListaInterresados lista = getLista(nomeArq);
@@ -88,7 +91,7 @@ public class InterfaceServImpl extends UnicastRemoteObject implements InterfaceS
 		}
 	}
 
-	// retorna os codigos de sucesso
+	// Recebe um arquivo do cliente 
 	@Override
 	public int upload(byte[] f, String nome) throws RemoteException {
 		arquivos.gravarArq(f, nome);
@@ -96,7 +99,8 @@ public class InterfaceServImpl extends UnicastRemoteObject implements InterfaceS
 
 		return 0;
 	}
-
+	
+	// Notifica os clientes interresados
 	public void notificar(String nomeArq) {
 		ListaInterresados lista = this.getLista(nomeArq);
 		if (lista == null)
