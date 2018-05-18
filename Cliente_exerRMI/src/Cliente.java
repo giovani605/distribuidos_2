@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,9 +30,9 @@ public class Cliente {
 	private InterfaceClienteImpl interfaceCliente;
 
 	public Cliente() {
-		
+
 		System.setProperty("java.security.policy", "file:java.policy");
-		
+
 		if (System.getSecurityManager() == null) {
 			System.setSecurityManager(new SecurityManager());
 		}
@@ -107,12 +108,24 @@ public class Cliente {
 				System.out.println("Arquivo não encontrado");
 				return;
 			}
+			gravarArq(arquivo, arq);
 
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+	}
+
+	public void gravarArq(byte[] bytes, String nomeArq) {
+		File f = new File(nomeArq);
+		try {
+			FileOutputStream output = new FileOutputStream(f);
+			output.write(bytes);
+			output.flush();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	// funcao que resgistra o interrese em um arquivo

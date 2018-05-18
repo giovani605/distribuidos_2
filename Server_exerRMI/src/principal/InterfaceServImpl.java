@@ -1,10 +1,15 @@
 package principal;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.ByteBuffer;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -110,13 +115,16 @@ public class InterfaceServImpl extends UnicastRemoteObject implements InterfaceS
 	}
 
 	public byte[] converterArqByte(File f) {
+		byte[] vetor = new byte[(int) f.length()];
 		try {
-			return Files.readAllBytes(f.toPath());
+			FileInputStream input = new FileInputStream(f);
+			input.read(vetor);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
 		}
+
+		return vetor;
 
 	}
 
