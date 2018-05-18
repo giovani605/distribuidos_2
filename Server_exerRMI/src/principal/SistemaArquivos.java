@@ -2,7 +2,6 @@ package principal;
 
 import java.io.File;
 import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
 
 //0-criar pasta separada oonde estarao os arquivos 
@@ -14,7 +13,7 @@ import javax.swing.JOptionPane;
 //carregar arquivo txt com class file
 
 public class SistemaArquivos {
-	private String PATH;
+	private String PATH = "arquivos/teste";
 
 	public SistemaArquivos(String PATH) {
 		this.PATH = PATH;
@@ -29,7 +28,7 @@ public class SistemaArquivos {
 		return null;
 	}
 
-	public static void CriaPasta() {
+	public static void CriaPasta(String Path) {
 		String diretorioAtual = new File(".").getAbsolutePath();
 
 		try {
